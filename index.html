@@ -3,59 +3,31 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name='viewport' content="width=device-width, initial-scale=1.0"/>
-		<title>檸檬子簽到表</title>
+		<title>檸檬子家長註冊表</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"/>
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 		<link rel="stylesheet" href="/resources/demos/style.css">
 		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 		<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-
-		<script>
-		$( function() {
-		$( "#datepicker" ).datepicker({dateFormat: "yy/mm/dd"});
-		} );
-
-		</script>
 		
 	</head>
 	<body>
 		<div class="container" id="app">
 			<form onsubmit="return submitform();">
 			  <div class="row">
-			    <div class="six columns">
-			      <label for="dateinput">請選擇要簽到的【日期】</label>
-			      <input class="u-full-width" type="text" id="datepicker" required="required">
+			    <div class="twelve columns" id="parentname">
+			      <label for="dateinput">請填寫要註冊的【家長】姓名</label>
+			      <input class="u-full-width" type="text" name="parentname" required="required">
+
 			    </div>
-			    <div class="six columns">
-			      <label for="classidxinput">請選擇要簽到的【堂次】</label>
-				  <label class="rdoclassidx">
-				    <input type="radio" name="classidx" value="1" required="required">
-				    <span class="label-body">1</span>
-				    <input type="radio" name="classidx" value="2">	
-				    <span class="label-body">2</span>
-				    <input type="radio" name="classidx" value="3">
-				    <span class="label-body">3</span>
-				    <input type="radio" name="classidx" value="4">
-				    <span class="label-body">4</span>
-				    <input type="radio" name="classidx" value="5">
-				    <span class="label-body">5</span>
-				    <input type="radio" name="classidx" value="6">
-				    <span class="label-body">6</span>
-				    <input type="radio" name="classidx" value="7">
-				    <span class="label-body">7</span>
-				  </label>
-			    </div>
-			    <div class="twelve columns" id="signlist">
-			      <label for="dateinput">請填寫要簽到的學生【姓名】</label>
-			      <input class="u-full-width" type="text" name="signnames" required="required">
-			      <input class="u-full-width" type="text" name="signnames" >
-			      <input class="u-full-width" type="text" name="signnames" >
-			      <input class="u-full-width" type="text" name="signnames" >
-			      <input class="u-full-width" type="text" name="signnames" >
+			    <div class="twelve columns" id="studentname">
+			      <label for="dateinput">請填寫要註冊的【學生】姓名</label>
+			      <input class="u-full-width" type="text" name="studentname" required="required">
+			      <input class="u-full-width" type="text" name="studentname" >
 			    </div>
 			    <div class="twelve columns">			  	
 			  	<input class="button-primary" type="submit" value="送出">
-			  	<button type="button" style="float: right" onclick="addsignlist()">新增姓名欄位</button>
+			  	<button type="button" style="float: right" onclick="addsignlist()">新增學生姓名欄位</button>
 			    </div>
 			  </div>
 			</form>
@@ -63,52 +35,36 @@
 		
 
 		<script type="text/javascript">
-			document.getElementById('submit-btn').addEventListener('click', function () {
-				var selectdate = document.getElementById("datepicker").value; 
-				if (!selectdate){
-					alert("請選擇簽到日期!");
-				}
-				else{
-					if(document.querySelector( 'input[name=class]:checked')==null){
-						alert("請選擇簽到堂次!");
-					}
-					else{
-						var selectclass = document.querySelector( 'input[name=class]:checked').value;
-							alert("date:"+selectdate+", class:"+selectclass);
-					}
-				}
-			});
 			function addsignlist (){
-				var signlist = document.getElementById('signlist');
+				var signlist = document.getElementById('studentname');
 				var newsignnames = document.createElement('input');
 				newsignnames.setAttribute("class","u-full-width");
 				newsignnames.setAttribute("type","text");
-				newsignnames.setAttribute("name","signnames");
+				newsignnames.setAttribute("name","studentname");
 				signlist.appendChild(newsignnames);
 			}
 
 
 			function submitform (){
-				var selectdate = document.getElementById("datepicker").value;
-				var selectclass = document.querySelector( 'input[name=classidx]:checked').value;
-				var signnamelist=[];
-				document.querySelectorAll('input[name="signnames"]').forEach((elem) => {
+				var parent = document.querySelector( 'input[name=parentname]').value;
+				var studentlist=[];
+				document.querySelectorAll('input[name="studentname"]').forEach((elem) => {
 					if (elem.value != ''){
-						signnamelist.push(elem.value);
+						studentlist.push(elem.value);
 					}
 				    });
-				var signnamelist=signnamelist.toString();
-				var signresult = confirm("要簽到的日期:【"+selectdate+"】\n要簽到的堂次:【第"+selectclass+"堂】\n要簽到的學生:【"+signnamelist+"】");
+				var studentlist=studentlist.toString();
+				var signresult = confirm("註冊的【家長】姓名:【"+parent+"】\n註冊的【學生】姓名:【"+studentlist+"】堂");
 					if (signresult){
 						liff
 						  .init({
-						    liffId: "1661169478-MwNYEGYm", // Use own liffId
+						    liffId: "1661247914-lwmrxYOa", // Use own liffId
 						  })
 						  .then(() => {
 							liff
 							  .sendMessages([{
 								"type":"text",
-								"text":'"簽到日期":"'+selectdate+'",\n"簽到堂次":"'+selectclass+'",\n"簽到姓名":"'+signnamelist+'"'
+								"text":'"家長姓名":"'+parent+'",\n"學生姓名":"'+studentlist+'"'
 							  }])
 							  .then(() => {
 							     liff.closeWindow();
